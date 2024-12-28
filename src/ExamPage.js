@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 // Pagination - الكومبوننت المسؤولة عن التنقل بين الصفحات
-import Pagination from './Pagination';
+import Pagination from "./Pagination";
 
 const ExamsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,56 +62,9 @@ const ExamsPage = () => {
       {upcomingExams.map((exam, i) => (
         <div key={i} className="backgroundRightDiv p-4 rounded mb-3">
           {/* Row مع تقسيم أعمدة عشان كله يبقى في نفس السطر */}
-          <div className="row align-items-start g-3">
-            
+          <div className="d-flex flex-column flex-md-row align-items-start  ">
             {/* Date & Time - التاريخ والوقت */}
-            <div className="col-3 text-white">
-              <p className="mb-1">
-                <i className="bi bi-calendar3 Browse me-2"></i> 
-                {exam.date}
-              </p>
-              <p className="mb-0">
-                <i className="bi bi-clock Browse me-2"></i>
-                {exam.time}
-              </p>
-            </div>
-
-            {/* Title & Instructor - العنوان والمحاضر */}
-            <div className="col-4 text-white">
-              <h5 className="mb-1">{exam.title}</h5>
-              <p className="card-text Browse mb-0">
-                Instructor <span className="text-white">: {exam.instructor}</span>
-              </p>
-            </div>
-
-            {/* Level - المستوى */}
-            <div className="col-2 text-center fw-bold text-white">
-              {exam.level}
-            </div>
-
-            {/* Score - الدرجة */}
-            <div className="col-1 text-center text-white">
-              {exam.score}
-            </div>
-
-            {/* Button - زرار الانضمام للامتحان */}
-            <div className="col-2 d-flex justify-content-end">
-              <button className="bg-grey btn-gold text-uppercase px-3">
-                Join Exam
-              </button>
-            </div>
-          </div>
-        </div>
-      ))}
-
-      {/* Previous Exams - الامتحانات السابقة */}
-      <h4 className="text-white mb-4 pt-5">Previous Exams</h4>
-      {previousExams.map((exam, i) => (
-        <div key={i} className="backgroundRightDiv p-4 rounded mb-3">
-          <div className="row align-items-start g-3">
-            
-            {/* Date & Time - التاريخ والوقت */}
-            <div className="col-3 text-white">
+            <div className="col-md-3 text-white">
               <p className="mb-1">
                 <i className="bi bi-calendar3 Browse me-2"></i>
                 {exam.date}
@@ -123,28 +76,81 @@ const ExamsPage = () => {
             </div>
 
             {/* Title & Instructor - العنوان والمحاضر */}
-            <div className="col-4 text-white">
+            <div className="col-md-4 text-white mt-4 mt-md-0">
               <h5 className="mb-1">{exam.title}</h5>
               <p className="card-text Browse mb-0">
-                Instructor <span className="text-white">: {exam.instructor}</span>
+                Instructor{" "}
+                <span className="text-white">: {exam.instructor}</span>
               </p>
             </div>
 
             {/* Level - المستوى */}
-            <div className="col-2 text-center fw-bold text-white">
-              {exam.level}
+            <div className="col-12 col-md-3 mt-4 mt-md-0 d-flex justify-content-between justify-content-md-around ">
+              {/* Level */}
+              <div className=" text-center fw-bold text-white">
+                {exam.level}
+              </div>
+              {/* Score */}
+              <div className=" text-center text-white">{exam.score}</div>
             </div>
 
-            {/* Score - الدرجة */}
-            <div className="col-1 text-center text-white">
-              {exam.score}
+            {/* Button - زرار الانضمام للامتحان */}
+            <div className="col-12 col-md-2 d-flex justify-content-md-end mt-4 mt-md-0">
+              <button className="col-12 col-md-auto  bg-grey btn-gold text-uppercase px-md-3">
+                Join Exam
+              </button>
             </div>
-
-            {/* ممكن تسيب بقية الأعمدة فاضية لو حابب نفس التنسيق بالزبط */}
-            <div className="col-2"></div>
           </div>
         </div>
       ))}
+
+     {/* Previous Exams - الامتحانات السابقة */}
+<h4 className="text-white mb-4 pt-5">Previous Exams</h4>
+{previousExams.map((exam, i) => (
+  <div key={i} className="backgroundRightDiv p-4 rounded mb-3">
+    {/* Row مع تقسيم أعمدة عشان كله يبقى في نفس السطر */}
+    <div className="d-flex flex-column flex-md-row align-items-start">
+      {/* Date & Time - التاريخ والوقت */}
+      <div className="col-md-3 text-white">
+        <p className="mb-1">
+          <i className="bi bi-calendar3 Browse me-2"></i>
+          {exam.date}
+        </p>
+        <p className="mb-0">
+          <i className="bi bi-clock Browse me-2"></i>
+          {exam.time}
+        </p>
+      </div>
+
+      {/* Title & Instructor - العنوان والمحاضر */}
+      <div className="col-md-4 text-white mt-4 mt-md-0">
+        <h5 className="mb-1">{exam.title}</h5>
+        <p className="card-text Browse mb-0">
+          Instructor{" "}
+          <span className="text-white">: {exam.instructor}</span>
+        </p>
+      </div>
+
+      {/* Level - المستوى */}
+      <div className="col-12 col-md-3 mt-4 mt-md-0 d-flex justify-content-between justify-content-md-around">
+        {/* Level */}
+        <div className=" text-center fw-bold text-white">
+          {exam.level}
+        </div>
+        {/* Score */}
+        <div className=" text-center text-white">{exam.score}</div>
+      </div>
+
+      {/* Button - زرار الانضمام للامتحان */}
+      <div className="col-12 col-md-2 d-flex justify-content-md-end mt-4 mt-md-0">
+        <button className="col-12 col-md-auto  bg-grey btn-gold text-uppercase px-md-3">
+          Finished
+        </button>
+      </div>
+    </div>
+  </div>
+))}
+
 
       {/* Pagination - أزرار التنقل بين الصفحات */}
       <div className="mt-4 ">
