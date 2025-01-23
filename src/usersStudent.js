@@ -1,7 +1,9 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import { filterData, SearchComponent } from './SearchFunction'; // استيراد البحث
 
 const UsersStudents = () => {
+    const [searchTerm, setSearchTerm] = useState(''); // إضافة حالة البحث
+
     const users = [
         { name: "Here's the username", status: 'Active', userID: 'FE-2303', role: 'Student', email: 'user@gmail.com' },
         { name: "Here's the username", status: 'Active', userID: 'BE-2302', role: 'Student', email: 'usertwo@gmail.com' },
@@ -10,17 +12,17 @@ const UsersStudents = () => {
         { name: "Here's the username", status: 'Inactive', userID: 'BE-2302', role: 'Student', email: 'usertwo@gmail.com' },
     ];
 
-    return (
-        <div className=" mt-3 mb-5">
+    // فلترة المستخدمين بناءً على البحث
+    const filteredUsers = filterData(users, searchTerm, ['name', 'status', 'userID', 'role', 'email']);
 
+    return (
+        <div className="mt-3 mb-5">
             {/* top button */}
             <div className="mb-md-0 d-flex justify-content-end position-relative" style={{ top: '-95px' }}>
                 <div className="d-none d-lg-block">
                     <button className="text-uppercase btn-gold">Create New User</button>
                 </div>
             </div>
-
-
 
             {/* top bar */}
             <div className="row align-items-center justify-content-between mb-3">
@@ -31,13 +33,16 @@ const UsersStudents = () => {
                     </div>
                 </div>
                 <div className="col-md-5 mt-3 mt-md-0">
-                    <div className="search-container d-none d-md-flex">
-                        <input type="text" className="search-input" placeholder="Search In Users" />
-                        <button className="search-btn"><i className="fas fa-search"></i></button>
-                    </div>
+                    {/* إضافة البحث */}
+                    <SearchComponent
+                        searchTerm={searchTerm}
+                        setSearchTerm={setSearchTerm}
+                        placeholder="Search in Users"
+                    />
                 </div>
             </div>
 
+            {/* جدول المستخدمين */}
             <div className="table-responsive">
                 <table className="table table-dark articles-table">
                     <thead>
@@ -50,9 +55,8 @@ const UsersStudents = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user, index) => (
+                        {filteredUsers.map((user, index) => (
                             <React.Fragment key={index}>
-
                                 {/* Table for Mobile */}
                                 <tr className="d-block d-md-none px-0 w-100 col-12 mx-auto">
                                     <td className='d-flex mx-auto w-100 mt-3' colSpan="5">
@@ -90,13 +94,14 @@ const UsersStudents = () => {
                                     </td>
                                 </tr>
 
-                                {/* table for Desktop */}
+                                {/* Table for Desktop */}
                                 <tr className="d-none d-md-table-row">
                                     <td data-label="Name">{user.name}</td>
                                     <td data-label="Status">
-                                        <span className={`${user.status === 'Active' ? 'bg-primary' : 'bg-grey'} ButtonsTable  `}>
+                                        <span className={`${user.status === 'Active' ? 'bg-primary' : 'bg-grey'} ButtonsTable`}>
                                             {user.status}
-                                        </span></td>
+                                        </span>
+                                    </td>
                                     <td data-label="User ID">{user.userID}</td>
                                     <td data-label="Role">{user.role}</td>
                                     <td data-label="Email">{user.email}</td>
@@ -126,15 +131,14 @@ const UsersStudents = () => {
                 </a>
             </div>
 
-            <div className="d-block d-lg-none text-center mt-5  d-md-flex justify-content-md-end ">
+            <div className="d-block d-lg-none text-center mt-5 d-md-flex justify-content-md-end">
                 <button className="btn btn-gold w-100">Create New Article</button>
             </div>
 
-            <div className="upload-button  d-block d-md-none text-center mt-2  d-md-flex justify-content-md-end mt-md-2">
-                <button className=" btn-gold btngoldCertificates w-100">Upload Certificates</button>
+            <div className="upload-button d-block d-md-none text-center mt-2 d-md-flex justify-content-md-end mt-md-2">
+                <button className="btn-gold btngoldCertificates w-100">Upload Certificates</button>
             </div>
         </div>
-      
     );
 };
 

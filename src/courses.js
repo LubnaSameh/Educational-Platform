@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { filterData, SearchComponent } from './SearchFunction'; // استيراد مكون ودالة البحث
 
 const Courses = () => {
+    const [searchTerm, setSearchTerm] = useState(''); // حالة البحث
+
     const courses = [
         { title: "Here's the course name", status: 'On Going', instructor: 'Mohamed Ali', level: 1, numberOfLessons: 20, language: 'Arabic', duration: '1 month', startDate: 'Thursday, June 8th', publishedOn: 'Thursday, June 10th 12:30 PM' },
         { title: "Here's the course name", status: 'On Going', instructor: 'Mohamed Ali', level: 1, numberOfLessons: 18, language: 'English', duration: '2 months', startDate: 'Thursday, June 8th', publishedOn: 'Thursday, June 10th 12:30 PM' },
         { title: "Here's the course name", status: 'Ended', instructor: 'Mohamed Ali', level: 2, numberOfLessons: 15, language: 'French', duration: '3 weeks', startDate: 'Thursday, June 8th', publishedOn: 'Thursday, June 10th 12:30 PM' },
-        { title: "Here's the course name", status: 'Ended', instructor: 'Mohamed Ali', level: 2, numberOfLessons: 25, language: 'Spanish', duration: '4 weeks', startDate: 'Thursday, June 8th', publishedOn: 'Thursday, June 10th 12:30 PM' },
-        { title: "Here's the course name", status: 'Ended', instructor: 'Mohamed Ali', level: 3, numberOfLessons: 30, language: 'Arabic', duration: '6 months', startDate: 'Thursday, June 8th', publishedOn: 'Thursday, June 10th 12:30 PM' },
+        { title: "Here's the course name", status: 'Ended', instructor: 'Mostafa Ali', level: 2, numberOfLessons: 25, language: 'Spanish', duration: '4 weeks', startDate: 'Thursday, June 8th', publishedOn: 'Thursday, June 10th 12:30 PM' },
+        { title: "Here's the course name", status: 'Ended', instructor: 'Sameh Ali', level: 3, numberOfLessons: 30, language: 'Arabic', duration: '6 months', startDate: 'Thursday, June 8th', publishedOn: 'Thursday, June 10th 12:30 PM' },
         { title: "Here's the course name", status: 'Ended', instructor: 'Mohamed Ali', level: 3, numberOfLessons: 10, language: 'German', duration: '5 weeks', startDate: 'Thursday, June 8th', publishedOn: 'Thursday, June 10th 12:30 PM' },
     ];
 
+    // فلترة الكورسات بناءً على البحث
+    const filteredCourses = filterData(courses, searchTerm, ['title', 'status', 'instructor','level', 'language',  'startDate', 'publishedOn']);
+
     return (
-        <div className="  mb-5 ">
+        <div className="mb-5">
             {/* Top button */}
             <div className="mb-md-0 d-flex justify-content-end position-relative" style={{ top: '-95px' }}>
                 <div className="d-none d-lg-block">
@@ -19,24 +25,21 @@ const Courses = () => {
                 </div>
             </div>
 
-
             {/* Top bar */}
-            <div className="row align-items-center justify-content-between mb-3  ">
+            <div className="row align-items-center justify-content-between mb-3">
                 <div className="col-md-5 text-md-start text-center">
                     <div className="header-title">
                         Courses
                         <div className="linee mx-auto mx-md-0"></div>
                     </div>
                 </div>
-
                 {/* Search Bar */}
-                <div className="col-md-5 ">
-                    <div className="search-container d-none d-md-flex">
-                        <input type="text" className="search-input" placeholder="Search In Courses" />
-                        <button className="search-btn"><i className="fas fa-search"></i></button>
-                    </div>
-                  
-                   
+                <div className="col-md-5">
+                    <SearchComponent
+                        searchTerm={searchTerm}
+                        setSearchTerm={setSearchTerm}
+                        placeholder="Search in Courses"
+                    />
                 </div>
             </div>
 
@@ -55,8 +58,7 @@ const Courses = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* table small */}
-                        {courses.map((course, index) => (
+                        {filteredCourses.map((course, index) => (
                             <React.Fragment key={index}>
                                 {/* Mobile View */}
                                 <tr className="d-block d-md-none px-0 w-100 col-12 mx-auto">
@@ -65,7 +67,7 @@ const Courses = () => {
                                             <div className="col-12 w-100 p-0 mx-auto">
                                                 <div className="d-flex justify-content-between align-items-center">
                                                     <h6 className="fw-bold fs-6">Course Name:</h6>
-                                                    <span className={`${course.status === 'On Going' ? 'bg-primary' : 'bg-grey'} ButtonsTable fs-6 fw-medium  py-2`} style={{ width: '35%' }}>
+                                                    <span className={`${course.status === 'On Going' ? 'bg-primary' : 'bg-grey'} ButtonsTable fs-6 fw-medium py-2`} style={{ width: '35%' }}>
                                                         {course.status}
                                                     </span>
                                                 </div>
@@ -103,19 +105,16 @@ const Courses = () => {
                                     </td>
                                 </tr>
 
-
                                 {/* Desktop View */}
                                 <tr className="d-none d-md-table-row">
                                     <td>{course.title}</td>
-                                    <td style={{ width: '15%' }}>
+                                    <td>
                                         <span className={`${course.status === 'On Going' ? 'bg-primary' : 'bg-grey'} ButtonsTable`} style={{ padding: '0.5rem 1rem', borderRadius: '10px', backgroundColor: course.status === 'On Going' ? '#BF9530' : '#C4C4C4', color: '#FFF' }}>
                                             {course.status}
                                         </span>
                                     </td>
                                     <td>{course.instructor}</td>
-                                    <td className="text-center" >
-                                        {course.level}
-                                    </td>
+                                    <td className="text-center">{course.level}</td>
                                     <td>{course.startDate}</td>
                                     <td>{course.publishedOn}</td>
                                     <td className="text-end">
@@ -125,7 +124,6 @@ const Courses = () => {
                                         </div>
                                     </td>
                                 </tr>
-
                             </React.Fragment>
                         ))}
                     </tbody>
@@ -147,13 +145,10 @@ const Courses = () => {
             </div>
             
             {/* Button at the bottom */}
-            <div className="d-block d-lg-none text-center mt-5 d-md-flex justify-content-md-end ">
+            <div className="d-block d-lg-none text-center mt-5 d-md-flex justify-content-md-end">
                 <button className="btn-gold w-100">Create New Courses</button>
             </div>
         </div>
-
-
-
     );
 };
 

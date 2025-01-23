@@ -1,7 +1,7 @@
 // App.js
 import React, { useState, useEffect, useRef } from 'react';
 // npm install react-router-dom
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate,useLocation } from 'react-router-dom';
 import Articles from './Articles';
 import Jobs from './Jobs';
 import Users from './users';
@@ -74,9 +74,10 @@ function Layout() {
         <Sidebar activePage={activePage} />
         <div className="col-lg-9 col-md-12">
           <Routes>
+          <Route path="/" element={<Navigate to="/admins" />} />
             <Route path="/admins" element={<Users />} />
             <Route path="/editors" element={<Users />} />
-            <Route path="/instructors" element={<JobForm />} />
+            {/* <Route path="/instructors" element={<JobForm />} /> */}
             <Route path="/students" element={<UsersStudents />} />
             <Route path="/users/add" element={<FormProvider><AddUserForm /></FormProvider>} />
 

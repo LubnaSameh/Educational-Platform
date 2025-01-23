@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-
-// Pagination - الكومبوننت المسؤولة عن التنقل بين الصفحات
 import Pagination from "./Pagination";
 
 const ExamsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const examsPerPage = 3; // عدد الامتحانات في كل صفحة
+  const examsPerPage = 3; // Number of exams per page
 
-  // Exams data - بيانات الامتحانات
+  // Data for upcoming exams
   const upcomingExams = [
     {
       date: "Wednesday, June 7th",
@@ -19,6 +17,7 @@ const ExamsPage = () => {
     },
   ];
 
+  // Data for previous exams
   const previousExams = [
     {
       date: "Monday, June 5th",
@@ -44,20 +43,40 @@ const ExamsPage = () => {
       level: "LEV. 1",
       score: "99/100",
     },
+    {
+      date: "Friday, June 2nd",
+      time: "11:30 AM",
+      title: "Advanced Database Systems",
+      instructor: "Hassan Ali",
+      level: "LEV. 2",
+      score: "85/100",
+    },
+    {
+      date: "Thursday, June 1st",
+      time: "09:30 AM",
+      title: "Machine Learning Basics",
+      instructor: "Noha Ahmed",
+      level: "LEV. 2",
+      score: "88/100",
+    },
   ];
 
-  // Combine all exams - جمع كل الامتحانات
-  const allExams = [...upcomingExams, ...previousExams];
-  const totalPages = Math.ceil(allExams.length / examsPerPage);
+  const totalPages = Math.ceil(previousExams.length / examsPerPage);
 
-  // Pagination slices - تحديد الامتحانات المعروضة حسب الصفحة
   const indexOfLastExam = currentPage * examsPerPage;
   const indexOfFirstExam = indexOfLastExam - examsPerPage;
-  const currentExams = allExams.slice(indexOfFirstExam, indexOfLastExam);
+  const currentExams = previousExams.slice(indexOfFirstExam, indexOfLastExam);
+
+  // Function to handle page changes
+  const handlePageChange = (page) => {
+    if (page > 0 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
 
   return (
     <div className="container py-5">
-      {/* Upcoming Exams - الامتحانات القادمة */}
+      {/* Upcoming Exams */}
       <h4 className="text-white mb-4">Upcoming Exams</h4>
       {upcomingExams.map((exam, i) => (
         <div key={i} className="backgroundRightDiv p-4 rounded mb-3">
@@ -104,10 +123,11 @@ const ExamsPage = () => {
         </div>
       ))}
 
-     {/* Previous Exams - الامتحانات السابقة */}
-<h4 className="text-white mb-4 pt-5">Previous Exams</h4>
-{previousExams.map((exam, i) => (
-  <div key={i} className="backgroundRightDiv p-4 rounded mb-3">
+
+      {/* Previous Exams */}
+      <h4 className="text-white mb-4 pt-5">Previous Exams</h4>
+      {currentExams.map((exam, i) => (
+     <div key={i} className="backgroundRightDiv p-4 rounded mb-3">
     {/* Row مع تقسيم أعمدة عشان كله يبقى في نفس السطر */}
     <div className="d-flex flex-column flex-md-row align-items-start">
       {/* Date & Time - التاريخ والوقت */}
@@ -152,12 +172,13 @@ const ExamsPage = () => {
 ))}
 
 
-      {/* Pagination - أزرار التنقل بين الصفحات */}
+
+      {/* Pagination */}
       <div className="mt-4 ">
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+          setCurrentPage={handlePageChange}
         />
       </div>
     </div>

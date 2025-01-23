@@ -56,7 +56,7 @@ const Sidebar = ({ activePage }) => {
                 <ul className="sidebar-list justify-content-center mx-auto my-0 pt-2 py-md-3 px-3 d-flex flex-row flex-md-column">
 
 {/* Users Section */}
-<li className={`title ${['Admins', 'Editors', 'Instructors', 'Students', 'Add User'].includes(activePage) ? 'active ' : ''} d-none d-md-block`} onClick={() => handleTitleClick('Users')}>
+<li className={`title ${['Admins', 'Editors', 'Students', 'Add User'].includes(activePage) ? 'active ' : ''} d-none d-md-block`} onClick={() => handleTitleClick('Users')}>
     Users
 </li>
 
@@ -73,9 +73,7 @@ const Sidebar = ({ activePage }) => {
     <li><Link className={activePage === 'Editors' ? 'active-link' : ''} to="/editors">
         <FontAwesomeIcon icon={faPen} className="fa" /> Editors
     </Link></li>
-    <li><Link className={activePage === 'Instructors' ? 'active-link' : ''} to="/instructors">
-        <FontAwesomeIcon icon={faChalkboardTeacher} className="fa" /> Instructors
-    </Link></li>
+   
     <li><Link className={activePage === 'Students' ? 'active-link' : ''} to="/students">
         <FontAwesomeIcon icon={faGraduationCap} className="fa" /> Students
     </Link></li>
